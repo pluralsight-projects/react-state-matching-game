@@ -1,73 +1,75 @@
 import React, { Component } from 'react';
-import OptionsPanel from '../OptionsPanel';
-import Board from '../Board';
-import { createTiles, indexOfSelected } from '../../misc/utils';
+import OptionsPanel from '../OptionsPanel'
+import Board from '../Board'
+import { createTiles, indexOfSelected } from '../../misc/utils'
 import GameContext from '../../GameContext'
 
 import './App.css';
 
-class App extends Component {
-
+class App extends Component{
   constructor(props) {
-    super(props);
+    super(props)
+
     this.state = {
       numTiles: 36,
       playing: false,
       previousTileIndex: null,
       tiles: [],
       toBeCleared: null
-    };
+    }
   }
 
-  startGame = () => {
-    this.setState(state => {
-      return {
-        playing: true,
-        previousTileIndex: null,
-        toBeCleared: null,
-        tiles: createTiles(state.numTiles, this.handleTileClicked)
-      }
-    });
-  };
+  handleNumTileChange = (num) => {
+    this.setState({
+      numTiles: num,
+      playing: false,
+      tiles: []
+    })
+  }
 
   handleTileClicked = (id, color) => {
     this.setState((state) => {
-      const tiles = state.tiles;
-      let toBeCleared = state.toBeCleared;
-      const selectedTileIndex = indexOfSelected(tiles, id, color);
-      let previousTileIndex = state.previousTileIndex;
+      const tiles = state.tiles
+      let toBeCleared = state.toBeCleared
+      const selectedTileIndex = indexOfSelected(tiles, id, color)
+      let previousTileIndex = state.previousTileIndex
 
-      if (toBeCleared !== null) {
-        tiles[toBeCleared[0]].selected = false;
-        tiles[toBeCleared[1]].selected = false;
-        toBeCleared = null;
+      if(toBeCleared !== null) {
+        tiles[toBeCleared[0]].selected = false
+        tiles[toBeCleared[1]].selected = false
+        toBeCleared = null
       }
 
-      tiles[selectedTileIndex].selected = true;
+      tiles[selectedTileIndex].selected = true
 
-      if (previousTileIndex !== null) {
-        const previousTile = tiles[previousTileIndex];
-        const selectedTile = tiles[selectedTileIndex];
+      if(previousTileIndex !== null) {
+        const previousTile = tiles[previousTileIndex]
+        const selectedTile = tiles[selectedTileIndex]
 
-        if (previousTile.id !== selectedTile.id && previousTile.color === selectedTile.color) {
-          selectedTile.matched = true;
-          previousTile.matched = true;
-          previousTileIndex = null;
+        if(previousTile.id !== selectedTile.id &&  previousTile.color === color) {
+          selectedTile.matched = true
+          previousTile.matched = true
+          previousTileIndex = null
         } else {
-          toBeCleared = [previousTileIndex, selectedTileIndex];
-          previousTileIndex = null;
+          toBeCleared = [previousTileIndex, selectedTileIndex]
+          previousTileIndex = null
         }
       } else {
-        previousTileIndex = selectedTileIndex;
+        previousTileIndex = selectedTileIndex
       }
 
-      return { tiles, toBeCleared, previousTileIndex };
+      return {toBeCleared, tiles, previousTileIndex}
     })
-  };
+  }
 
-  handleNumTileChange = (num) => {
-    this.setState({ numTiles: num, playing: false, tiles: [] });
-  };
+  startGame = (numTiles) => {
+    this.setState((state) => ({
+      playing: true,
+      previousTileIndex: null,
+      toBeCleared: null,
+      tiles: createTiles(state.numTiles, this.handleTileClicked)
+    }))
+  }
 
   render() {
     const context = { ...this.state, handleNumTileChange: this.handleNumTileChange, startGame: this.startGame };

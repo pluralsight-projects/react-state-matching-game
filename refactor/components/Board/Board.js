@@ -1,17 +1,12 @@
 import React from 'react'
 import './Board.css';
-import Tile from '../Tile';
-import TileSelector from '../TileSelector';
+import Tile from '../Tile'
 import GameContext from '../../GameContext';
-
 const Board = (props) => {
-
   const gridConfig = (numTiles) => ({
     gridTemplateColumns: `repeat(${Math.sqrt(numTiles)}, 1fr)`,
     gridTemplateRows: `repeat(${Math.sqrt(numTiles)}, 1fr)`,
   });
-
-
   return (
     <GameContext.Consumer>
       {({ tiles, numTiles }) => (
