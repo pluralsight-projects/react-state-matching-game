@@ -45,7 +45,11 @@ describe('App', () => {
 
     const instance = wrapper.instance()
 
-    instance.startGame()
+    try {
+      instance.startGame()
+    } catch(error) {
+
+    }
 
     expect(instance.state.tiles, 'Did you call the createTiles function?').toHaveLength(8)
     expect(instance.state.playing, 'Did you set playing on state?').toEqual(true)

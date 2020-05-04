@@ -13,10 +13,23 @@ describe('Board', () => {
 
   it('Passes props from the board to tiles @pass-board-props-to-tiles', () => {
 
-    const firstTileProps = wrapper.find(Tile).at(0).props()
-    const firstTileKey = wrapper.find(Tile).at(0).key()
+    let firstTileProps = wrapper.find(Tile).at(0)
 
-    expect(firstTileProps.color, 'Did you pass the tile object as props to the <Tile>?').toContain('#')
+    try {
+      firstTileProps = firstTileProps.props()
+    } catch(error){
+
+    }
+
+    let firstTileKey = wrapper.find(Tile).at(0)
+
+    try {
+      firstTileKey = firstTileKey.key()
+    } catch(error) {
+
+    }
+
+    expect(firstTileProps.color || null, 'Did you pass the tile object as props to the <Tile>?').toContain('#')
     expect(firstTileProps.selected, 'Did you pass the tile object as props to the <Tile>?').toEqual(false)
     expect(firstTileProps.matched, 'Did you pass the tile object as props to the <Tile>?').toEqual(false)
     expect(typeof firstTileProps.svg, 'Did you pass the tile object as props to the <Tile>?').toEqual('function')

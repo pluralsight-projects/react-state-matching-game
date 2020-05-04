@@ -14,12 +14,24 @@ describe('Button', () => {
   })
 
     it('Conditionally renders text @conditionally-render-text', () => {
-      let buttonChild = wrapper.find('button').childAt(0).text()
+      let buttonChild = wrapper.find('button').childAt(0)
+
+      try {
+        buttonChild = buttonChild.text()
+      } catch(error) {
+
+      }
 
       expect(buttonChild, 'Did you pass the numTiles prop to TileSelector?').toEqual('start')
 
       wrapper = shallow(<Button playing={true} startGame={() => {}}/>)
-      buttonChild = wrapper.find('button').childAt(0).text()
+      buttonChild = wrapper.find('button').childAt(0)
+
+      try {
+        buttonChild = buttonChild.text()
+      } catch(error) {
+
+      }
 
       expect(buttonChild, 'Did you pass the numTiles prop to TileSelector?').toEqual('reset')
     })
