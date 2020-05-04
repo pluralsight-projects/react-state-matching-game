@@ -4,7 +4,7 @@ const GameContext = React.createContext({
     numTiles: 36,
     playing: false,
     handleNumTileChange: () => { },
-    startPlaying: () => { }
+    startGame: () => { }
 });
 
 export default GameContext;

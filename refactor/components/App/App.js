@@ -70,14 +70,15 @@ class App extends Component {
   };
 
   render() {
+    const context = { ...this.state, handleNumTileChange: this.handleNumTileChange, startGame: this.startGame };
     return (
       <div className="App">
         <header className="App-header">
           Turbo-Matcher
       </header>
-        <GameContext.Provider value={this.state}>
-          <OptionsPanel handleNumTileChange={this.handleNumTileChange} startGame={this.startGame} playing={this.state.playing} numTiles={this.state.numTiles} />
-          <Board numTiles={this.state.numTiles} tiles={this.state.tiles} />
+        <GameContext.Provider value={context} >
+          <OptionsPanel />
+          <Board />
         </GameContext.Provider>
       }
       </div>
